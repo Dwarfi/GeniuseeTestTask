@@ -1,4 +1,5 @@
 
+using GeniuseeTestTask.Handlers;
 using GeniuseeTestTask.Interfaces;
 using GeniuseeTestTask.Services;
 
@@ -18,10 +19,10 @@ namespace GeniuseeTestTask
 
             builder.Services.AddSingleton<IRainfallApiService, RainfallApiService>();
             builder.Services.AddScoped<IRainfallService, RainfallService>();
-
+            
             builder.Services.AddSwaggerGen(c =>
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "GeniuseeTestTask.xml")));
-            
+            builder.Services.AddExceptionHandler<AppExceptionHandler>();
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -30,6 +31,7 @@ namespace GeniuseeTestTask
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rainfall Api v1"));
             }
 
+            app.UseExceptionHandler(_ => { });
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
