@@ -21,7 +21,7 @@ public class RainfallController(IRainfallService rainfallService) : ControllerBa
     /// <response code="500">Internal server error</response>
     [HttpGet("id/{stationId}/readings")]
     public async Task<IActionResult> GetReadings([FromRoute] [MinLength(5)] string stationId,
-        [FromQuery] [Range(10, 100)] int count = 10)
+        [FromQuery] [Range(1, 100)] int count = 10)
     {
         try
         {
